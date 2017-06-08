@@ -2,6 +2,7 @@
 .idea/
 
 # Project
-target/
 jajmeup.iml
+target/
 src/main/resources/application-development.yml
+src/main/resources/application-test.yml
