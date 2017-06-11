@@ -3,3 +3,5 @@
 
 # Project
 target/
+jajmeup.iml
+src/main/resources/application-development.yml

@@ -1,9 +1,9 @@
 spring:
     datasource:
-        name: jajmeup
-        url: jdbc:mysql://localhost:3306/jajmeup
-        username: jajmeup
-        password: ra4Y75UkG8X1N21j
+        name: [NAME]
+        url: jdbc:mysql://localhost:3306/[NAME]
+        username: [USERNAME]
+        password: [PASSWORD]
     jpa:
         hibernate:
             ddl-auto: none
