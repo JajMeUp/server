@@ -1,10 +1,12 @@
 package com.jajteam.jajmeup.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -13,12 +15,17 @@ public class User {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
+
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
 
     @NotEmpty
     private String username;
 
     @NotEmpty
+    @JsonIgnore
     private String password;
 
     @NotEmpty
@@ -33,6 +40,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Profile getSettings() {
+        return profile;
+    }
+
+    public void setSettings(Profile settings) {
+        this.profile = settings;
     }
 
     public String getUsername() {

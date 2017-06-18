@@ -2,8 +2,6 @@ package com.jajteam.jajmeup.command;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.annotation.Nullable;
-
 public class UserCommand {
 
     @NotEmpty
@@ -12,8 +10,8 @@ public class UserCommand {
     @NotEmpty
     private String password;
 
-    @Nullable
-    private String role;
+    @NotEmpty
+    private String displayName;
 
     public String getUsername() {
         return username;
@@ -31,11 +29,11 @@ public class UserCommand {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

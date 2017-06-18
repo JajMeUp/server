@@ -2,6 +2,7 @@ package com.jajteam.jajmeup.configuration;
 
 import com.jajteam.jajmeup.properties.JajSecurityProperties;
 import com.jajteam.jajmeup.repository.UserRepository;
+import com.jajteam.jajmeup.repository.UserSettingsRepository;
 import com.jajteam.jajmeup.security.JwtAuthenticationProvider;
 import com.jajteam.jajmeup.service.UserService;
 import com.jajteam.jajmeup.validation.UserValidator;
@@ -22,10 +23,15 @@ public class BeansConfiguration {
         return new UserRepository(sessionFactory, passwordEncoder, jajSecurityProperties);
     }
 
+    @Bean
+    public UserSettingsRepository userSettingsRepository() {
+        return new UserSettingsRepository();
+    }
+
     /* Services */
     @Bean
-    public UserService userService(UserRepository userRepository, UserValidator userValidator) {
-        return new UserService(userRepository, userValidator);
+    public UserService userService(UserRepository userRepository, UserValidator userValidator, UserSettingsRepository userSettingsRepository) {
+        return new UserService(userRepository, userValidator, userSettingsRepository);
     }
 
     /* Validators */

@@ -3,6 +3,7 @@ package com.jajteam.jajmeup.service;
 import com.jajteam.jajmeup.AbstractITest;
 import com.jajteam.jajmeup.command.UserCommand;
 import com.jajteam.jajmeup.domain.User;
+import com.jajteam.jajmeup.domain.Profile;
 import com.jajteam.jajmeup.dto.TokenDto;
 import com.jajteam.jajmeup.exception.InvalidCredentialException;
 import com.jajteam.jajmeup.exception.NoSuchUserException;
@@ -31,6 +32,7 @@ public class UserServiceITest extends AbstractITest {
         UserCommand command = new UserCommand();
         command.setUsername("user-test");
         command.setPassword("test");
+        command.setDisplayName("display-name-test");
 
         return command;
     }
@@ -44,6 +46,11 @@ public class UserServiceITest extends AbstractITest {
         assertThat(passwordEncoder.matches("test", user.getPassword())).isTrue();
         assertThat(user.getRole()).isEqualTo("USER");
         assertThat(user.getCreated()).isNotNull();
+        assertThat(user.getSettings()).isNotNull();
+
+        Profile profile = user.getSettings();
+        assertThat(profile.getDisplayName()).isEqualTo("display-name-test");
+        assertThat(profile.getVisibility()).isEqualTo(Profile.VISIBILITY_FRIENDS);
     }
 
     @Test(expected = UserAlreadyExistException.class)

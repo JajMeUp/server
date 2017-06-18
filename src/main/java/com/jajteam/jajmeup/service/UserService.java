@@ -2,12 +2,14 @@ package com.jajteam.jajmeup.service;
 
 import com.jajteam.jajmeup.command.UserCommand;
 import com.jajteam.jajmeup.command.mapper.UserCommandMapper;
+import com.jajteam.jajmeup.domain.Profile;
 import com.jajteam.jajmeup.domain.User;
 import com.jajteam.jajmeup.dto.TokenDto;
 import com.jajteam.jajmeup.exception.InvalidCredentialException;
 import com.jajteam.jajmeup.exception.NoSuchUserException;
 import com.jajteam.jajmeup.exception.UserAlreadyExistException;
 import com.jajteam.jajmeup.repository.UserRepository;
+import com.jajteam.jajmeup.repository.UserSettingsRepository;
 import com.jajteam.jajmeup.validation.UserValidator;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -19,11 +21,13 @@ public class UserService {
 
     private UserRepository repository;
     private UserValidator validator;
+    private UserSettingsRepository userSettingsRepository;
 
     @Inject
-    public UserService(UserRepository repository, UserValidator validator) {
+    public UserService(UserRepository repository, UserValidator validator, UserSettingsRepository userSettingsRepository) {
         this.repository = repository;
         this.validator = validator;
+        this.userSettingsRepository = userSettingsRepository;
     }
 
     @Transactional
@@ -42,6 +46,10 @@ public class UserService {
         }
 
         repository.create(user);
+        Profile settings = new Profile(user, command.getDisplayName());
+        userSettingsRepository.persist(settings);
+        user.setSettings(settings);
+
         return user;
     }
 

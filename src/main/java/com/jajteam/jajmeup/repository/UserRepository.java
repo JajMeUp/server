@@ -1,10 +1,10 @@
 package com.jajteam.jajmeup.repository;
 
+import com.jajteam.jajmeup.domain.QUser;
 import com.jajteam.jajmeup.domain.User;
 import com.jajteam.jajmeup.exception.InvalidCredentialException;
 import com.jajteam.jajmeup.exception.NoSuchUserException;
 import com.jajteam.jajmeup.properties.JajSecurityProperties;
-import com.jajteam.jajmeup.security.QJajUser;
 import com.jajteam.jajmeup.security.TokenUtils;
 import com.querydsl.jpa.hibernate.HibernateQuery;
 import org.hibernate.SessionFactory;
@@ -43,10 +43,10 @@ public class UserRepository {
     }
 
     public User getByUsername(String username) throws NoSuchUserException {
-        QJajUser qJajUser = QJajUser.jajUser;
+        QUser qUser = QUser.user;
         User user = new HibernateQuery<User>(sessionFactory.getCurrentSession())
-                .from(qJajUser)
-                .where(qJajUser.username.eq(username))
+                .from(qUser)
+                .where(qUser.username.eq(username))
                 .fetchFirst();
         if(user != null) {
             return user;
