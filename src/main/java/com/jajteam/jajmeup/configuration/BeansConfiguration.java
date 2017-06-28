@@ -3,10 +3,12 @@ package com.jajteam.jajmeup.configuration;
 import com.jajteam.jajmeup.command.mapper.AlarmCommandMapper;
 import com.jajteam.jajmeup.properties.JajSecurityProperties;
 import com.jajteam.jajmeup.repository.AlarmRepository;
-import com.jajteam.jajmeup.repository.UserRepository;
+import com.jajteam.jajmeup.repository.FriendshipRepository;
 import com.jajteam.jajmeup.repository.ProfileRepository;
+import com.jajteam.jajmeup.repository.UserRepository;
 import com.jajteam.jajmeup.security.JwtAuthenticationProvider;
 import com.jajteam.jajmeup.service.AlarmService;
+import com.jajteam.jajmeup.service.FriendshipService;
 import com.jajteam.jajmeup.service.UserService;
 import com.jajteam.jajmeup.validation.AlarmValidator;
 import com.jajteam.jajmeup.validation.UserValidator;
@@ -37,6 +39,11 @@ public class BeansConfiguration {
         return new AlarmRepository();
     }
 
+    @Bean
+    public FriendshipRepository friendshipRepository() {
+        return new FriendshipRepository();
+    }
+
     /* Services */
     @Bean
     public UserService userService(UserRepository userRepository, UserValidator userValidator, ProfileRepository profileRepository) {
@@ -46,6 +53,11 @@ public class BeansConfiguration {
     @Bean
     public AlarmService alarmService(AlarmRepository repository, AlarmCommandMapper mapper, AlarmValidator validator) {
         return new AlarmService(repository, mapper, validator);
+    }
+
+    @Bean
+    public FriendshipService friendshipService(FriendshipRepository repository, ProfileRepository profileRepository) {
+        return new FriendshipService(repository, profileRepository);
     }
 
     /* Validators */

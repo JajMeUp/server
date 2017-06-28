@@ -6,7 +6,7 @@ import com.jajteam.jajmeup.command.UserCommand;
 import com.jajteam.jajmeup.domain.Alarm;
 import com.jajteam.jajmeup.domain.User;
 import com.jajteam.jajmeup.exception.EntityNotFoundException;
-import com.jajteam.jajmeup.exception.InvalidAlarmException;
+import com.jajteam.jajmeup.exception.InvalidEntityException;
 import com.jajteam.jajmeup.exception.UserAlreadyExistException;
 import com.jajteam.jajmeup.security.JwtAuthenticationToken;
 import org.junit.Before;
@@ -53,7 +53,7 @@ public class AlarmServiceITests extends AbstractITest {
     }
 
     @Test
-    public void createAlarmOk() throws InvalidAlarmException, EntityNotFoundException {
+    public void createAlarmOk() throws EntityNotFoundException, InvalidEntityException {
         AlarmCommand alarmCommand = new AlarmCommand();
         alarmCommand.setLink("link-test");
         alarmCommand.setMessage("message-test");
@@ -69,7 +69,7 @@ public class AlarmServiceITests extends AbstractITest {
     }
 
     @Test(expected = EntityNotFoundException.class)
-    public void createAlarmThrowsInvalidAlarmException() throws InvalidAlarmException, EntityNotFoundException {
+    public void createAlarmThrowsInvalidAlarmException() throws EntityNotFoundException, InvalidEntityException {
         AlarmCommand alarmCommand = new AlarmCommand();
         alarmCommand.setLink("link-test");
         alarmCommand.setMessage("message-test");

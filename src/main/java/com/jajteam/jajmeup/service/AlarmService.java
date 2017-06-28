@@ -4,7 +4,7 @@ import com.jajteam.jajmeup.command.AlarmCommand;
 import com.jajteam.jajmeup.command.mapper.AlarmCommandMapper;
 import com.jajteam.jajmeup.domain.Alarm;
 import com.jajteam.jajmeup.exception.EntityNotFoundException;
-import com.jajteam.jajmeup.exception.InvalidAlarmException;
+import com.jajteam.jajmeup.exception.InvalidEntityException;
 import com.jajteam.jajmeup.repository.AlarmRepository;
 import com.jajteam.jajmeup.validation.AlarmValidator;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +29,7 @@ public class AlarmService extends AbstractService {
     }
 
     @Transactional
-    public Alarm create(AlarmCommand command) throws EntityNotFoundException, InvalidAlarmException {
+    public Alarm create(AlarmCommand command) throws EntityNotFoundException, InvalidEntityException {
         Alarm alarm = mapper.toAlarm(command);
         alarm.setVoter(getAuthenticatedUser().getProfile());
 
@@ -40,6 +40,6 @@ public class AlarmService extends AbstractService {
             repository.persist(alarm);
             return alarm;
         }
-        throw new InvalidAlarmException(result);
+        throw new InvalidEntityException(Alarm.class.getSimpleName(), result.getAllErrors());
     }
 }

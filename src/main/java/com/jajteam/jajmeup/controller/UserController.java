@@ -15,8 +15,12 @@ import javax.validation.Valid;
 @RestController
 public class UserController {
 
-    @Inject
     private UserService service;
+
+    @Inject
+    public UserController(UserService service) {
+        this.service = service;
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity register(@RequestBody @Valid UserCommand command) throws UserAlreadyExistException {
