@@ -16,7 +16,6 @@ public abstract class AbstractRepository<PK extends Serializable, T> {
 
     @Inject
     private SessionFactory sessionFactory;
-
     private final Class<T> persistentClass;
 
     public AbstractRepository() {

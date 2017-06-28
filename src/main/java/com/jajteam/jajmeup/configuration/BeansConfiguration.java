@@ -1,10 +1,14 @@
 package com.jajteam.jajmeup.configuration;
 
+import com.jajteam.jajmeup.command.mapper.AlarmCommandMapper;
 import com.jajteam.jajmeup.properties.JajSecurityProperties;
+import com.jajteam.jajmeup.repository.AlarmRepository;
 import com.jajteam.jajmeup.repository.UserRepository;
-import com.jajteam.jajmeup.repository.UserSettingsRepository;
+import com.jajteam.jajmeup.repository.ProfileRepository;
 import com.jajteam.jajmeup.security.JwtAuthenticationProvider;
+import com.jajteam.jajmeup.service.AlarmService;
 import com.jajteam.jajmeup.service.UserService;
+import com.jajteam.jajmeup.validation.AlarmValidator;
 import com.jajteam.jajmeup.validation.UserValidator;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -24,14 +28,24 @@ public class BeansConfiguration {
     }
 
     @Bean
-    public UserSettingsRepository userSettingsRepository() {
-        return new UserSettingsRepository();
+    public ProfileRepository userSettingsRepository() {
+        return new ProfileRepository();
+    }
+
+    @Bean
+    public AlarmRepository alarmRepository() {
+        return new AlarmRepository();
     }
 
     /* Services */
     @Bean
-    public UserService userService(UserRepository userRepository, UserValidator userValidator, UserSettingsRepository userSettingsRepository) {
-        return new UserService(userRepository, userValidator, userSettingsRepository);
+    public UserService userService(UserRepository userRepository, UserValidator userValidator, ProfileRepository profileRepository) {
+        return new UserService(userRepository, userValidator, profileRepository);
+    }
+
+    @Bean
+    public AlarmService alarmService(AlarmRepository repository, AlarmCommandMapper mapper, AlarmValidator validator) {
+        return new AlarmService(repository, mapper, validator);
     }
 
     /* Validators */
@@ -43,6 +57,17 @@ public class BeansConfiguration {
     @Bean
     public UserValidator userValidator(UserRepository userRepository) {
         return new UserValidator(userRepository);
+    }
+
+    @Bean
+    public AlarmValidator alarmValidator(ProfileRepository profileRepository) {
+        return new AlarmValidator(profileRepository);
+    }
+
+    /* Mappers */
+    @Bean
+    public AlarmCommandMapper alarmCommandMapper(ProfileRepository profileRepository) {
+        return new AlarmCommandMapper(profileRepository);
     }
 
     /* Others */

@@ -42,11 +42,11 @@ public class User {
         this.id = id;
     }
 
-    public Profile getSettings() {
+    public Profile getProfile() {
         return profile;
     }
 
-    public void setSettings(Profile settings) {
+    public void setProfile(Profile settings) {
         this.profile = settings;
     }
 

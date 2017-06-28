@@ -46,9 +46,10 @@ public class UserServiceITest extends AbstractITest {
         assertThat(passwordEncoder.matches("test", user.getPassword())).isTrue();
         assertThat(user.getRole()).isEqualTo("USER");
         assertThat(user.getCreated()).isNotNull();
-        assertThat(user.getSettings()).isNotNull();
+        assertThat(user.getProfile()).isNotNull();
 
-        Profile profile = user.getSettings();
+        Profile profile = user.getProfile();
+        assertThat(profile.getId()).isNotNull();
         assertThat(profile.getDisplayName()).isEqualTo("display-name-test");
         assertThat(profile.getVisibility()).isEqualTo(Profile.VISIBILITY_FRIENDS);
     }
