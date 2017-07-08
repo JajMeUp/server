@@ -9,6 +9,7 @@ import com.jajteam.jajmeup.repository.UserRepository;
 import com.jajteam.jajmeup.security.JwtAuthenticationProvider;
 import com.jajteam.jajmeup.service.AlarmService;
 import com.jajteam.jajmeup.service.FriendshipService;
+import com.jajteam.jajmeup.service.ProfileService;
 import com.jajteam.jajmeup.service.UserService;
 import com.jajteam.jajmeup.validation.AlarmValidator;
 import com.jajteam.jajmeup.validation.UserValidator;
@@ -44,6 +45,11 @@ public class BeansConfiguration {
         return new FriendshipRepository();
     }
 
+    @Bean
+    public ProfileRepository profileRepository() {
+        return new ProfileRepository();
+    }
+
     /* Services */
     @Bean
     public UserService userService(UserRepository userRepository, UserValidator userValidator, ProfileRepository profileRepository) {
@@ -58,6 +64,11 @@ public class BeansConfiguration {
     @Bean
     public FriendshipService friendshipService(FriendshipRepository repository, ProfileRepository profileRepository) {
         return new FriendshipService(repository, profileRepository);
+    }
+
+    @Bean
+    public ProfileService profileService(ProfileRepository profileRepository) {
+        return new ProfileService(profileRepository);
     }
 
     /* Validators */
