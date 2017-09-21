@@ -1,7 +1,7 @@
 spring:
     datasource:
-        name: [NAME]
-        url: jdbc:mysql://localhost:3306/[NAME]
+        name: [NAME_TEST]
+        url: jdbc:mysql://localhost:3306/[NAME_TEST]
         username: [USERNAME]
         password: [PASSWORD]
     jpa:
@@ -9,4 +9,4 @@ spring:
             ddl-auto: none
 jajmeup:
     security:
-        secret-key: [SECRET-KEY]
+        secret-key: secret-key-test
