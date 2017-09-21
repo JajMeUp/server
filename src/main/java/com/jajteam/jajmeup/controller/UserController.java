@@ -1,5 +1,6 @@
 package com.jajteam.jajmeup.controller;
 
+import com.jajteam.jajmeup.command.LoginCommand;
 import com.jajteam.jajmeup.command.UserCommand;
 import com.jajteam.jajmeup.exception.InvalidCredentialException;
 import com.jajteam.jajmeup.exception.UserAlreadyExistException;
@@ -25,17 +26,20 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity register(@RequestBody @Valid UserCommand command) throws UserAlreadyExistException {
         service.create(command);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ResponseEntity login(@RequestParam(name = "username") String username,
-                                @RequestParam(name = "password") String password) throws InvalidCredentialException {
-        return ResponseEntity.status(HttpStatus.OK).body(service.authenticate(username, password));
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity login(@RequestBody @Valid LoginCommand command) throws InvalidCredentialException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(service.authenticate(command.getUsername(), command.getPassword()));
     }
 
     @RequestMapping(value = "/api/me", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity me() {
-        return ResponseEntity.status(HttpStatus.OK).body(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }

@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
-import javax.inject.Inject;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +23,6 @@ public class FriendshipService extends AbstractService {
     private FriendshipRepository friendshipRepository;
     private ProfileRepository profileRepository;
 
-    @Inject
     public FriendshipService(FriendshipRepository friendshipRepository, ProfileRepository profileRepository) {
         this.friendshipRepository = friendshipRepository;
         this.profileRepository = profileRepository;

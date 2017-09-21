@@ -12,6 +12,7 @@ import com.jajteam.jajmeup.service.FriendshipService;
 import com.jajteam.jajmeup.service.ProfileService;
 import com.jajteam.jajmeup.service.UserService;
 import com.jajteam.jajmeup.validation.AlarmValidator;
+import com.jajteam.jajmeup.validation.ProfileValidator;
 import com.jajteam.jajmeup.validation.UserValidator;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -67,8 +68,8 @@ public class BeansConfiguration {
     }
 
     @Bean
-    public ProfileService profileService(ProfileRepository profileRepository) {
-        return new ProfileService(profileRepository);
+    public ProfileService profileService(ProfileRepository profileRepository, ProfileValidator profileValidator) {
+        return new ProfileService(profileRepository, profileValidator);
     }
 
     /* Validators */
@@ -85,6 +86,11 @@ public class BeansConfiguration {
     @Bean
     public AlarmValidator alarmValidator(ProfileRepository profileRepository) {
         return new AlarmValidator(profileRepository);
+    }
+
+    @Bean
+    public ProfileValidator profileValidator() {
+        return new ProfileValidator();
     }
 
     /* Mappers */

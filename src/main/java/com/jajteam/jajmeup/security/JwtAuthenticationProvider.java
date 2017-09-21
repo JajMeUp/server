@@ -5,6 +5,7 @@ import com.jajteam.jajmeup.exception.NoSuchUserException;
 import com.jajteam.jajmeup.properties.JajSecurityProperties;
 import com.jajteam.jajmeup.service.UserService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.rememberme.InvalidCookieException;
 import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
@@ -37,7 +39,12 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         if(StringUtils.isEmpty(token)) {
             throw new AuthenticationCredentialsNotFoundException("The security token is empty");
         }
-        final Claims jwsClaims = TokenUtils.parseClaims(token, jajSecurityProperties.getSecretKey());
+        Claims jwsClaims;
+        try {
+            jwsClaims = TokenUtils.parseClaims(token, jajSecurityProperties.getSecretKey());
+        } catch (ExpiredJwtException e) {
+            throw new InvalidCookieException("The given token has expired");
+        }
         final String subject = jwsClaims.getSubject();
         final String role = jwsClaims.get(TokenUtils.USER_ROLE, String.class);
         List<GrantedAuthority> authorities = new ArrayList<>();

@@ -8,14 +8,12 @@ import com.jajteam.jajmeup.dto.TokenDto;
 import com.jajteam.jajmeup.exception.InvalidCredentialException;
 import com.jajteam.jajmeup.exception.NoSuchUserException;
 import com.jajteam.jajmeup.exception.UserAlreadyExistException;
-import com.jajteam.jajmeup.repository.UserRepository;
 import com.jajteam.jajmeup.repository.ProfileRepository;
+import com.jajteam.jajmeup.repository.UserRepository;
 import com.jajteam.jajmeup.validation.UserValidator;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
-
-import javax.inject.Inject;
 
 public class UserService {
 
@@ -23,7 +21,6 @@ public class UserService {
     private UserValidator validator;
     private ProfileRepository profileRepository;
 
-    @Inject
     public UserService(UserRepository repository, UserValidator validator, ProfileRepository profileRepository) {
         this.repository = repository;
         this.validator = validator;

@@ -43,4 +43,9 @@ public class FriendshipController {
         friendshipService.answerFriendRequest(id, Friendship.REJECTED);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @RequestMapping(value = "/pending", method = RequestMethod.GET)
+    public ResponseEntity getPendingRequest() {
+        return ResponseEntity.status(HttpStatus.OK).body(friendshipService.getPendingRequests());
+    }
 }

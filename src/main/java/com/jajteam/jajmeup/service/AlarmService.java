@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
-import javax.inject.Inject;
 import java.sql.Date;
 import java.time.Instant;
 
@@ -21,7 +20,6 @@ public class AlarmService extends AbstractService {
     private AlarmCommandMapper mapper;
     private AlarmValidator validator;
 
-    @Inject
     public AlarmService(AlarmRepository repository, AlarmCommandMapper mapper, AlarmValidator validator) {
         this.repository = repository;
         this.mapper = mapper;

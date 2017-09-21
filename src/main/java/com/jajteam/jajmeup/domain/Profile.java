@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 public class Profile {
 
+    public static final String VISIBILITY_PRIVATE = "PRIVATE";
     public static final String VISIBILITY_FRIENDS = "FRIENDS";
     public static final String VISIBILITY_WORLD = "WORLD";
 
