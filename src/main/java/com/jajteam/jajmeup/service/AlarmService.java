@@ -13,15 +13,16 @@ import org.springframework.validation.BindingResult;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.util.List;
 
 public class AlarmService extends AbstractService {
 
-    private AlarmRepository repository;
+    private AlarmRepository alarmRepository;
     private AlarmCommandMapper mapper;
     private AlarmValidator validator;
 
     public AlarmService(AlarmRepository repository, AlarmCommandMapper mapper, AlarmValidator validator) {
-        this.repository = repository;
+        this.alarmRepository = repository;
         this.mapper = mapper;
         this.validator = validator;
     }
@@ -35,9 +36,14 @@ public class AlarmService extends AbstractService {
         validator.validate(alarm, result);
         if(!result.hasErrors()) {
             alarm.setCreated(Date.from(Instant.now()));
-            repository.persist(alarm);
+            alarmRepository.persist(alarm);
             return alarm;
         }
         throw new InvalidEntityException(Alarm.class.getSimpleName(), result.getAllErrors());
+    }
+
+    @Transactional
+    public List<Alarm> getLastAlarm(Long targetId){
+        return alarmRepository.getLastAlarm(targetId);
     }
 }

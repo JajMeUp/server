@@ -25,8 +25,14 @@ public class AlarmController {
         this.service = service;
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/makevote/{url}", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity createAlarm(@RequestBody @Valid AlarmCommand command) throws EntityNotFoundException, InvalidEntityException {
+        service.create(command);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @RequestMapping(value = "/lastalarm", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity lastAlarm(@RequestBody @Valid AlarmCommand command) throws EntityNotFoundException, InvalidEntityException {
         service.create(command);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
