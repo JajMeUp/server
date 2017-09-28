@@ -5,8 +5,6 @@ import com.jajteam.jajmeup.domain.Alarm;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.jpa.hibernate.HibernateQuery;
 
-import java.util.List;
-
 public class AlarmRepository extends AbstractRepository<Long, Alarm> {
 
     @Override
@@ -14,11 +12,14 @@ public class AlarmRepository extends AbstractRepository<Long, Alarm> {
         return QAlarm.alarm;
     }
 
-    public List<Alarm> getLastAlarm(Long requesterId) { //toujours des listes ?
+    public String getLastAlarm(Long requesterId) {
         QAlarm qAlarm = QAlarm.alarm;
-        return new HibernateQuery<Alarm>(getSession())
+        Alarm temp = new HibernateQuery<Alarm>(getSession())
                 .from(qAlarm)
                 .where(qAlarm.target.id.eq(requesterId))
-                .fetch();
+                .orderBy(qAlarm.created.asc())
+                .limit(1)
+                .fetchOne();
+        return temp.getLink();
     }
 }
