@@ -43,7 +43,7 @@ public class AlarmService extends AbstractService {
     }
 
     @Transactional
-    public List<Alarm> getLastAlarm(Long targetId){
-        return alarmRepository.getLastAlarm(targetId);
+    public Alarm getLastAlarm(){
+        return alarmRepository.getLastAlarm(getAuthenticatedUser().getProfile().getId());
     }
 }

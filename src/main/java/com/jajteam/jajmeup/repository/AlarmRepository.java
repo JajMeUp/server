@@ -12,14 +12,13 @@ public class AlarmRepository extends AbstractRepository<Long, Alarm> {
         return QAlarm.alarm;
     }
 
-    public String getLastAlarm(Long requesterId) {
+    public Alarm getLastAlarm(Long requesterId) {
         QAlarm qAlarm = QAlarm.alarm;
-        Alarm temp = new HibernateQuery<Alarm>(getSession())
+        return new HibernateQuery<Alarm>(getSession())
                 .from(qAlarm)
                 .where(qAlarm.target.id.eq(requesterId))
-                .orderBy(qAlarm.created.asc())
+                .orderBy(qAlarm.created.desc())
                 .limit(1)
                 .fetchOne();
-        return temp.getLink();
     }
 }
