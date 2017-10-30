@@ -26,7 +26,7 @@ public class ProfileService extends AbstractService {
 
     @Transactional
     public List<ProfileDto> findProfileByNameSearch(String search) {
-        return ProfileDtoMapper.toProfileDtoList(profileRepository.findProfileByNameSearch(search));
+        return ProfileDtoMapper.toProfileDtoList(profileRepository.findProfileByNameSearch(search, getAuthenticatedUser().getProfile().getId()));
     }
 
     @Transactional

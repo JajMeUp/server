@@ -83,4 +83,15 @@ public class Profile {
     public void setPicture(@Nullable String picture) {
         this.picture = picture;
     }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "id=" + id +
+                ", user=" + user +
+                ", visibility='" + visibility + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", picture='" + picture + '\'' +
+                '}';
+    }
 }
