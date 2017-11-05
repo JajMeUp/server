@@ -3,6 +3,8 @@ package com.jajteam.jajmeup.service;
 import com.jajteam.jajmeup.command.AlarmCommand;
 import com.jajteam.jajmeup.command.mapper.AlarmCommandMapper;
 import com.jajteam.jajmeup.domain.Alarm;
+import com.jajteam.jajmeup.dto.AlarmDto;
+import com.jajteam.jajmeup.dto.mapper.AlarmDtoMapper;
 import com.jajteam.jajmeup.exception.EntityNotFoundException;
 import com.jajteam.jajmeup.exception.InvalidEntityException;
 import com.jajteam.jajmeup.repository.AlarmRepository;
@@ -41,8 +43,8 @@ public class AlarmService extends AbstractService {
         throw new InvalidEntityException(Alarm.class.getSimpleName(), result.getAllErrors());
     }
 
-    @Transactional
-    public Alarm getLastAlarm(){
-        return alarmRepository.getLastAlarm(getAuthenticatedUser().getProfile().getId());
+    @Transactional(readOnly = true)
+    public AlarmDto getLastAlarm(){
+        return AlarmDtoMapper.mapToDto(alarmRepository.getLastAlarm(getAuthenticatedUser().getProfile().getId()));
     }
 }
