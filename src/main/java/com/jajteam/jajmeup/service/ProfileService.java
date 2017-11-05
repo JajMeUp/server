@@ -8,10 +8,10 @@ import com.jajteam.jajmeup.exception.EntityNotFoundException;
 import com.jajteam.jajmeup.exception.InvalidEntityException;
 import com.jajteam.jajmeup.repository.ProfileRepository;
 import com.jajteam.jajmeup.validation.ProfileValidator;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 public class ProfileService extends AbstractService {
@@ -24,7 +24,7 @@ public class ProfileService extends AbstractService {
         this.profileValidator = profileValidator;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ProfileDto> findProfileByNameSearch(String search) {
         return ProfileDtoMapper.toProfileDtoList(profileRepository.findProfileByNameSearch(search, getAuthenticatedUser().getProfile().getId()));
     }
@@ -40,5 +40,10 @@ public class ProfileService extends AbstractService {
 
         Profile profile = profileRepository.getByKey(getAuthenticatedUser().getProfile().getId());
         profile.setVisibility(command.getVisibility());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProfileDto> findProfileByNameAndActiveFriendship(String search) {
+        return ProfileDtoMapper.toProfileDtoList(profileRepository.findProfileByNameAndActiveFriendship(search, getAuthenticatedUser().getProfile().getId()));
     }
 }

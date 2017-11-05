@@ -30,4 +30,9 @@ public class ProfileController {
         profileService.update(command);
         return ResponseEntity.status(204).build();
     }
+
+    @RequestMapping(value = "/search/friend", method = RequestMethod.GET)
+    public ResponseEntity searchProfileByNameAndActiveFriendship(@RequestParam(value = "q") String search) {
+        return ResponseEntity.status(200).body(profileService.findProfileByNameAndActiveFriendship(search));
+    }
 }

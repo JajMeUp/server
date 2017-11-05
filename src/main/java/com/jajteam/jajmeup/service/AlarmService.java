@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult;
 
 import java.sql.Date;
 import java.time.Instant;
-import java.util.List;
 
 public class AlarmService extends AbstractService {
 

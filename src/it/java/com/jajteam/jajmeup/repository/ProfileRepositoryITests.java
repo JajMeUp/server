@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -98,5 +99,32 @@ public class ProfileRepositoryITests extends AbstractITest {
 
         List<Profile> result = profileRepository.findProfileByNameSearch("", profiles.get(0).getId());
         assertThat(result).extracting("id").isEqualTo(expectedResults.stream().map(Profile::getId).collect(Collectors.toList()));
+    }
+
+    @Test
+    public void findProfileByNameAndActiveFriendship() {
+        Date creationDate = Date.from(Instant.now());
+
+        Friendship friendship = new Friendship();
+        friendship.setStatus(Friendship.ACCEPTED);
+        friendship.setRequester(profiles.get(0));
+        friendship.setTarget(profiles.get(1));
+        friendship.setUpdated(creationDate);
+
+        friendshipRepository.persist(friendship);
+
+        Friendship friendship2 = new Friendship();
+        friendship2.setStatus(Friendship.ACCEPTED);
+        friendship2.setRequester(profiles.get(0));
+        friendship2.setTarget(profiles.get(2));
+        friendship2.setUpdated(creationDate);
+
+        friendshipRepository.persist(friendship2);
+
+        List<Profile> result = profileRepository.findProfileByNameAndActiveFriendship("", profiles.get(0).getId());
+        assertThat(result).extracting("id").isEqualTo(Stream.of(profiles.get(1), profiles.get(2)).map(Profile::getId).collect(Collectors.toList()));
+
+        result = profileRepository.findProfileByNameAndActiveFriendship("2", profiles.get(0).getId());
+        assertThat(result).extracting("id").isEqualTo(Stream.of(profiles.get(2)).map(Profile::getId).collect(Collectors.toList()));
     }
 }

@@ -26,6 +26,18 @@ public class ProfileRepository extends AbstractRepository<Long,Profile> {
         if (!search.isEmpty()) {
             sql = sql.concat(" AND LOWER(display_name) LIKE LOWER('%" + search + "%')");
         }
+        sql = sql.concat(" LIMIT 20");
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Profile.class));
+    }
+
+    public List<Profile> findProfileByNameAndActiveFriendship(String search, Long searcherID) {
+        String sql = "SELECT * FROM profile WHERE id != " + searcherID + " AND id IN " +
+                "(SELECT idTarget FROM friendship WHERE idRequester = " + String.valueOf(searcherID) + " AND status = 'ACCEPTED' UNION " +
+                "SELECT idRequester FROM friendship WHERE idTarget = " + String.valueOf(searcherID) + " AND status = 'ACCEPTED')";
+        if (!search.isEmpty()) {
+            sql = sql.concat(" AND LOWER(display_name) LIKE LOWER('%" + search + "%')");
+        }
+        sql = sql.concat(" LIMIT 10");
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Profile.class));
     }
 }
