@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@Table(name="friendship")
 public class Friendship {
 
     public static final String PENDING = "PENDING";

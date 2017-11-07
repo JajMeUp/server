@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import javax.persistence.*;
 
 @Entity
+@Table(name="profile")
 public class Profile {
 
     public static final String VISIBILITY_PRIVATE = "PRIVATE";
