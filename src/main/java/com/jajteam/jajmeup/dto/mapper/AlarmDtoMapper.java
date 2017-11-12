@@ -8,7 +8,7 @@ public class AlarmDtoMapper {
     public static AlarmDto mapToDto(Alarm alarm){
         AlarmDto dto = new AlarmDto();
         dto.setMessage(alarm.getMessage());
-        dto.setURL(alarm.getLink());
+        dto.setLink(alarm.getLink());
         dto.setVoterName(alarm.getVoter().getUser().getUsername());
 
         return dto;

@@ -14,6 +14,8 @@ public class AlarmRepository extends AbstractRepository<Long, Alarm> {
 
     public Alarm getLastAlarm(Long requesterId) {
         QAlarm qAlarm = QAlarm.alarm;
+        //TODO
+        //check if result
         return new HibernateQuery<Alarm>(getSession())
                 .from(qAlarm)
                 .where(qAlarm.target.id.eq(requesterId))
