@@ -9,9 +9,8 @@ public class AlarmDtoMapper {
         AlarmDto dto = new AlarmDto();
         dto.setMessage(alarm.getMessage());
         dto.setLink(alarm.getLink());
-        dto.setVoterName(alarm.getVoter().getUser().getProfile().getDisplayName());
+        dto.setVoterName(alarm.getVoter().getDisplayName());
 
         return dto;
     }
-
 }
